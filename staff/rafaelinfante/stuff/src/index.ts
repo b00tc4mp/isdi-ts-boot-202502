@@ -24,29 +24,30 @@ const numbersSum = sumNumbers(numbers)
 //   score: number
 // }
 
-type Student = {
-  name: string
-  age: number
-  score: number | string // Union type
-}
+// Type aliases
+// type Student = {
+//   name: string
+//   age: number
+//   score: number | string // Union type
+// // }
 
-const students: Student[] = [
-  {
-    name: 'Pep',
-    age: 43,
-    score: '90',
-  },
-  {
-    name: 'Josep',
-    age: 34,
-    score: 70,
-  },
-  {
-    name: 'Anna',
-    age: 25,
-    score: 80,
-  },
-]
+// const students: Student[] = [
+//   {
+//     name: 'Pep',
+//     age: 43,
+//     score: '90',
+//   },
+//   {
+//     name: 'Josep',
+//     age: 34,
+//     score: 70,
+//   },
+//   {
+//     name: 'Anna',
+//     age: 25,
+//     score: 80,
+//   },
+// ]
 
 function triplify(value: number | string): number | string {
   if (typeof value === 'number') {
@@ -57,3 +58,14 @@ function triplify(value: number | string): number | string {
 }
 
 // console.log(triplify('a'))
+
+// Type intersection
+
+// type Category = 'novel' | 'horror' | 'adventure'
+
+type Book = {
+  writer: string
+  title: string
+}
+
+type Novel = Book & {}
