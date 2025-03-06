@@ -51,8 +51,8 @@ class Teacher extends Person {
 
 const manu = new Teacher('Manu', 48)
 
-const rafa = new Student('Rafa', 33, 'software developer')
+// const rafa = new Student('Rafa', 33, 'software developer')
 const cris = new Student('Cris', 32, 'software developer')
 
-manu.addStudents([rafa, cris])
+manu.addStudents([cris])
 console.log(manu.getStudents)
