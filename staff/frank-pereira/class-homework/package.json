@@ -1,0 +1,16 @@
+{
+  "name": "class-homework",
+  "version": "1.0.0",
+  "description": "## Contexto:",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:dev": "tsc -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
+}
