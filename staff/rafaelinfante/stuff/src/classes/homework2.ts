@@ -1,8 +1,8 @@
-interface Refrigerado {
+interface IRefrigerado {
   mantenerTemperatura(): void
 }
 
-interface Peligroso {
+interface IPeligroso {
   verificarSeguridad(): void
 }
 
@@ -32,7 +32,7 @@ class Camion extends Vehiculo {
   }
 }
 
-class CamionRefrigerado extends Vehiculo implements Refrigerado {
+class CamionRefrigerado extends Vehiculo implements IRefrigerado {
   private _temperatura: number
 
   constructor(
@@ -49,7 +49,7 @@ class CamionRefrigerado extends Vehiculo implements Refrigerado {
   }
 }
 
-class CamionPeligroso extends Vehiculo implements Peligroso {
+class CamionPeligroso extends Vehiculo implements IPeligroso {
   constructor(pesoCarga: number, distanciaRecorrer: number) {
     super(pesoCarga, distanciaRecorrer)
   }
@@ -59,13 +59,13 @@ class CamionPeligroso extends Vehiculo implements Peligroso {
   }
 }
 
-// const camion1 = new Camion(2000, 500)
-// camion1.mostrarDetalle()
+const camion1 = new Camion(2000, 500)
+camion1.mostrarDetalle()
 
 // const camionFrio = new CamionRefrigerado(1500, 300, -10)
 // camionFrio.mostrarDetalle()
 // camionFrio.mantenerTemperatura()
 
-const camionPeligroso = new CamionPeligroso(2500, 400)
-camionPeligroso.mostrarDetalle()
-camionPeligroso.verificarSeguridad()
+// const camionPeligroso = new CamionPeligroso(2500, 400)
+// camionPeligroso.mostrarDetalle()
+// camionPeligroso.verificarSeguridad()
