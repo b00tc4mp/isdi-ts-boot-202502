@@ -2,13 +2,14 @@ import "dotenv/config.js";
 import express, { json, Request, Response } from "express";
 import registerUserHandler from "./handlers/registerUserHandler.js";
 import errorHandler from "./middlewares/errorHandler.js";
-import morgan from "morgan";
+import loggers from "./logs/index.js";
+const { morganMiddleware } = loggers;
 
 const api = express();
 
 const PORT = process.env.PORT || 7500;
 
-api.use(morgan("dev"));
+api.use(morganMiddleware);
 
 const jsonBodyParser = json();
 

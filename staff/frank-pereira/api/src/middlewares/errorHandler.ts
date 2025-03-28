@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCode } from "./types.js";
 import errors from "../errors/index.js";
+import loggers from "../logs/index.js";
+
 const {
   CredentialsError,
   DuplicityError,
@@ -42,6 +44,10 @@ const errorHandler = (
     error: status === 500 ? SystemError.name : error.constructor.name,
     message: error.message,
   });
+
+  const { logger } = loggers;
+
+  logger.error(error);
 };
 
 export default errorHandler;
