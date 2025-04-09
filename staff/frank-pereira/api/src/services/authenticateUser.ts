@@ -3,6 +3,7 @@ import { User } from "../data/schemas/index.js";
 import validate from "../validations.js";
 
 import errors from "../errors/index.js";
+
 const { NotFoundError, CredentialsError, SystemError } = errors;
 
 const authenticateUser = (email: string, password: string): Promise<string> => {
