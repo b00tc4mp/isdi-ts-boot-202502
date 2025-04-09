@@ -32,10 +32,21 @@ const validatePassword = (password: string) => {
   }
 };
 
+const validateId = (userId: string) => {
+  if (typeof userId !== "string") {
+    throw new ValidationError("invalid user id");
+  }
+
+  if (userId.length !== 24) {
+    throw new ValidationError("invalid user id length");
+  }
+};
+
 const validate = {
   username: validateUsername,
   email: validateEmail,
   password: validatePassword,
+  id: validateId,
 };
 
 export default validate;
