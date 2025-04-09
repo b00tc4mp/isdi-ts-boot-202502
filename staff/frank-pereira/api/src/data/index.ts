@@ -1,27 +1,17 @@
-import path from "path";
-import { readFile, writeFile } from "fs/promises";
+import { connect, disconnect } from "mongoose";
 
-const getCollectionPath = (name: string) =>
-  path.join(process.cwd(), "src", "data", `${name}.json`);
+import errors from "../errors/index.js";
+const { SystemError } = errors;
 
-export const data = {
-  loadCollection<T>(name: string): Promise<T[]> {
-    const file = getCollectionPath(name);
-
-    return readFile(file, "utf8")
-      .then((json) => JSON.parse(json))
-      .catch((error) => {
-        throw new Error(error.message);
-      });
-  },
-
-  saveCollection<T>(name: string, data: T[]): Promise<void> {
-    const file = getCollectionPath(name);
-
-    const json = JSON.stringify(data);
-
-    return writeFile(file, json).catch((error) => {
-      throw new Error(error.message);
+const data = {
+  connect(uri: string, dbName: string) {
+    return connect(`${uri}/${dbName}`).catch((error: Error) => {
+      throw new SystemError(error.message);
     });
   },
+  disconnect(): Promise<void> {
+    return disconnect();
+  },
 };
+
+export { data };

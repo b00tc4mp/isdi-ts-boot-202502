@@ -1,7 +1,8 @@
-import { data } from "../data/index.js";
+import bcrypt from "bcryptjs";
 import validate from "../validations.js";
 import errors from "../errors/index.js";
-import { User } from "../types.js";
+import { IUser } from "../types.js";
+import { User } from "../data/schemas/index.js";
 
 const { DuplicityError, SystemError } = errors;
 
@@ -14,31 +15,26 @@ const registerUser = (
   validate.email(email);
   validate.password(password);
 
-  return data
-    .loadCollection<User>("users")
+  return bcrypt
+    .hash(password, 10)
     .catch((error) => {
       throw new SystemError(error.message);
     })
-    .then((users) => {
-      const user = users.find((user) => user.username === username);
-
-      if (user) {
-        throw new DuplicityError("user already exists");
-      }
-
-      const newUser: User = {
-        id: crypto.randomUUID(),
+    .then((hash) => {
+      const newUser: Partial<IUser> = {
         username,
         email,
-        password,
+        password: hash,
       };
 
-      users.push(newUser);
+      return User.create(newUser).catch((error) => {
+        if (error.code === 11000)
+          throw new DuplicityError("user already exists");
 
-      return data.saveCollection<User>("users", users).catch((error) => {
         throw new SystemError(error.message);
       });
-    });
+    })
+    .then(() => {});
 };
 
 export default registerUser;
