@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "start:dev": "node --watch dist/index.js",
+    "inspect": "node --inspect-brk dist/index.js",
+    "inspect:one": "node --inspect-brk",
     "build": "tsc",
     "build:dev": "tsc -w"
   },
@@ -15,6 +17,7 @@
   "description": "",
   "devDependencies": {
     "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
     "dotenv": "^16.4.7",
     "typescript": "^5.8.2"
   },
@@ -22,6 +25,7 @@
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.1",
     "zod": "^3.24.2"
   }

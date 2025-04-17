@@ -1,8 +1,7 @@
 import bcrypt from "bcryptjs";
-import { User } from "../data/schemas/index.js";
-import validate from "../validations.js";
-
-import errors from "../errors/index.js";
+import validate from "../../validations.js";
+import errors from "../../errors/index.js";
+import { User } from "../../data/models/index.js";
 
 const { NotFoundError, CredentialsError, SystemError } = errors;
 

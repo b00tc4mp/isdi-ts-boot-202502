@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
-import validate from "../validations.js";
-import errors from "../errors/index.js";
-import { IUser } from "../types.js";
-import { User } from "../data/schemas/index.js";
+import validate from "../../validations.js";
+import errors from "../../errors/index.js";
+import { UserType } from "../types.js";
+import { User } from "../../data/models/index.js";
 
 const { DuplicityError, SystemError } = errors;
 
@@ -21,7 +21,7 @@ const registerUser = (
       throw new SystemError(error.message);
     })
     .then((hash) => {
-      const newUser: Partial<IUser> = {
+      const newUser: Omit<UserType, "id"> = {
         username,
         email,
         password: hash,

@@ -1,6 +1,7 @@
-import { User } from "../data/schemas/index.js";
-import validate from "../validations.js";
-import errors from "../errors/index.js";
+import { User } from "../../data/models/index.js";
+import errors from "../../errors/index.js";
+import validate from "../../validations.js";
+
 const { SystemError, NotFoundError } = errors;
 
 const getUserUsername = (userId: string): Promise<string> => {

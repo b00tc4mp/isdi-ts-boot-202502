@@ -7,6 +7,7 @@ import loggers from "./logs/index.js";
 import { data } from "./data/index.js";
 
 import { userRouter } from "./routes/users.js";
+import { postRouter } from "./routes/posts.js";
 
 const { morganMiddleware } = loggers;
 
@@ -24,6 +25,8 @@ data
     api.use(morganMiddleware);
 
     api.use("/users", userRouter);
+
+    api.use("/posts", postRouter);
 
     api.get("/ping", (_req: Request, res: Response) => {
       res.json({ message: "pong 🏓" });

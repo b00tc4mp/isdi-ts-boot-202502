@@ -42,11 +42,31 @@ const validateId = (userId: string) => {
   }
 };
 
+const validateImage = (image: string) => {
+  if (typeof image !== "string") throw new ValidationError("invalid image");
+  if (image.trim().length === 0)
+    throw new ValidationError("invalid image length");
+};
+
+const validateDescription = (text: string) => {
+  if (typeof text !== "string") throw new ValidationError("invalid text");
+  if (text.trim().length === 0)
+    throw new ValidationError("invalid text length");
+};
+
+const validateCallback = (callback: Function) => {
+  if (typeof callback !== "function")
+    throw new ValidationError("invalid callback");
+};
+
 const validate = {
   username: validateUsername,
   email: validateEmail,
   password: validatePassword,
   id: validateId,
+  image: validateImage,
+  description: validateDescription,
+  callback: validateCallback,
 };
 
 export default validate;
