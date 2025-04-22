@@ -6,18 +6,6 @@ import loggers from "../logs/index.js";
 import { ZodError } from "zod";
 const { logger } = loggers;
 
-const isZodError = (error: Error): error is ZodError =>
-  error instanceof ZodError;
-
-const parsedError = (error: Error) => {
-  if (isZodError(error)) {
-    return {
-      name: ValidationError.name,
-      message: error.errors.map((error) => error.message).join(", "),
-    };
-  }
-};
-
 const {
   CredentialsError,
   DuplicityError,
@@ -35,38 +23,39 @@ const errorHandler = (
   _next: NextFunction
 ) => {
   let status: StatusCode = 500;
+  let errorName = SystemError.name;
+  let { message } = error;
 
   switch (true) {
     case error instanceof ZodError:
       status = 400;
+      errorName = NotFoundError.name;
+      message = error.errors.map((error) => error.message).join(", ");
       break;
     case error instanceof NotFoundError:
       status = 404;
+      errorName = error.constructor.name;
       break;
     case error instanceof ValidationError:
       status = 400;
+      errorName = error.constructor.name;
       break;
     case error instanceof CredentialsError ||
       error instanceof AuthorizationError:
       status = 401;
+      errorName = error.constructor.name;
       break;
     case error instanceof OwnershipError:
       status = 403;
+      errorName = error.constructor.name;
       break;
     case error instanceof DuplicityError:
       status = 409;
+      errorName = error.constructor.name;
       break;
   }
 
-  res.status(status).json({
-    error:
-      status === 500
-        ? SystemError.name
-        : isZodError(error)
-        ? parsedError(error)?.name
-        : error.constructor.name,
-    message: isZodError(error) ? parsedError(error)?.message : error.message,
-  });
+  res.status(status).json({ error: errorName, message });
 
   logger.error(error);
 };
