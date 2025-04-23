@@ -5,8 +5,11 @@ import { createPostSchema } from "../data/models/zodSchemas.js";
 import createPostHandler from "../handlers/createPostHandler.js";
 import { authHandler } from "../middlewares/authHandler.js";
 import getPostsHandler from "../handlers/getPostsHandler.js";
+import deletePostHandler from "../handlers/deletePostHandler.js";
 
 export const postRouter = Router();
+
+postRouter.get("/", authHandler, getPostsHandler);
 
 postRouter.post(
   "/",
@@ -16,4 +19,4 @@ postRouter.post(
   createPostHandler
 );
 
-postRouter.get("/", authHandler, getPostsHandler);
+postRouter.delete("/:postId", authHandler, deletePostHandler);
