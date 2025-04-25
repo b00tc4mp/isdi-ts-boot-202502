@@ -7,8 +7,10 @@ export type UserType = {
 
 export type PostType = {
   id: string;
-  author: string;
+  author: { id: string; username: string };
   description: string;
   image: string;
   date: Date;
+  liked: boolean;
+  likes: number;
 };

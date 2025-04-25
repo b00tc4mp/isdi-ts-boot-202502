@@ -2,31 +2,45 @@ import { Post, User } from "../../data/models/index.js";
 import validate from "../../validations.js";
 import { PostType } from "../types.js";
 import errors from "../../errors/index.js";
+import { PopulatedPostDocType } from "../../data/types.js";
 const { SystemError, NotFoundError } = errors;
 
 const getPosts = (userId: string): Promise<PostType[]> => {
   validate.id(userId);
 
   return (async () => {
+    let user, posts;
+
     try {
-      const [user, posts] = await Promise.all([
+      [user, posts] = await Promise.all([
         User.exists({ _id: userId }),
-        Post.find(),
+        Post.find()
+          .populate("author", "username")
+          .lean<PopulatedPostDocType[]>(),
       ]);
-
-      if (!user) throw new NotFoundError("not found user");
-      if (posts.length === 0) new NotFoundError("posts not found");
-
-      return posts.map<PostType>((post) => ({
-        id: post._id.toString(),
-        author: post.author.toString(),
-        description: post.description,
-        image: post.image,
-        date: post.date,
-      }));
     } catch (error) {
       throw new SystemError((error as Error).message);
     }
+
+    if (!user) throw new NotFoundError("not found user");
+    if (posts.length === 0) new NotFoundError("posts not found");
+
+    return posts.map<PostType>((post) => {
+      const { likes } = post;
+
+      return {
+        id: post._id.toString(),
+        author: {
+          id: post.author._id.toString(),
+          username: post.author.username,
+        },
+        description: post.description,
+        image: post.image,
+        date: post.date,
+        liked: likes.some((userObjectId) => userObjectId.toString() === userId),
+        likes: likes.length,
+      };
+    });
   })();
 };
 

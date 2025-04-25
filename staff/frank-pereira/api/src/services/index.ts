@@ -4,7 +4,7 @@ import getUserUsername from "./user/getUserUsername.js";
 import createPost from "./post/createPost.js";
 import getPosts from "./post/getPosts.js";
 import deletePost from "./post/deletePost.js";
-deletePost;
+import togglePostLike from "./post/togglePostLike.js";
 
 const service = {
   registerUser,
@@ -14,6 +14,7 @@ const service = {
   createPost,
   getPosts,
   deletePost,
+  togglePostLike,
 };
 
 export default service;
