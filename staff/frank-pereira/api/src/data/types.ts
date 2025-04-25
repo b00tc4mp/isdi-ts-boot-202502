@@ -14,5 +14,10 @@ export type PostDocType = {
   image: string;
   description: string;
   date: Date;
+  likes: [Types.ObjectId];
   __v: number;
+};
+
+export type PopulatedPostDocType = Omit<PostDocType, "author"> & {
+  author: Pick<UserDocType, "_id" | "username">;
 };

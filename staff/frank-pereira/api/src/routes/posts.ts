@@ -6,6 +6,7 @@ import createPostHandler from "../handlers/createPostHandler.js";
 import { authHandler } from "../middlewares/authHandler.js";
 import getPostsHandler from "../handlers/getPostsHandler.js";
 import deletePostHandler from "../handlers/deletePostHandler.js";
+import togglePostLikeHandler from "../handlers/togglePostLikeHandler.js";
 
 export const postRouter = Router();
 
@@ -20,3 +21,5 @@ postRouter.post(
 );
 
 postRouter.delete("/:postId", authHandler, deletePostHandler);
+
+postRouter.patch("/:postId/likes", authHandler, togglePostLikeHandler);

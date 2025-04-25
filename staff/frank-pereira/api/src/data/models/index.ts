@@ -45,6 +45,12 @@ const post = new Schema<PostDocType>(
       required: true,
       default: Date.now,
     },
+    likes: [
+      {
+        type: ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { versionKey: false }
 );
